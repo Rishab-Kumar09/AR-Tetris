@@ -1,0 +1,26 @@
+name: ar_tetris
+description: AR Tetris game using hand tracking
+version: 1.0.0+1
+
+environment:
+  sdk: ">=2.19.0 <4.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  provider: ^6.0.0
+  flutter_animate: ^4.0.0
+  wakelock_plus: ^1.0.0
+  camera: ^0.10.0
+  cupertino_icons: ^1.0.2
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^2.0.0
+
+flutter:
+  uses-material-design: true
+  assets:
+    - assets/images/
+    - assets/models/ 

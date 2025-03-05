@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+    
+    <!-- Main bubble -->
+    <path
+        android:fillColor="#03A9F4"
+        android:pathData="M54,54m-38,0a38,38 0,1 1,76 0a38,38 0,1 1,-76 0" />
+    
+    <!-- Small bubble 1 -->
+    <path
+        android:fillColor="#81D4FA"
+        android:pathData="M35,45m-8,0a8,8 0,1 1,16 0a8,8 0,1 1,-16 0" />
+    
+    <!-- Small bubble 2 -->
+    <path
+        android:fillColor="#B3E5FC"
+        android:pathData="M70,40m-6,0a6,6 0,1 1,12 0a6,6 0,1 1,-12 0" />
+    
+    <!-- Small bubble 3 -->
+    <path
+        android:fillColor="#E1F5FE"
+        android:pathData="M60,65m-10,0a10,10 0,1 1,20 0a10,10 0,1 1,-20 0" />
+    
+    <!-- Highlight on main bubble -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M40,35a12,8 0,1 0,8 12a12,8 0,0 0,-8 -12"
+        android:fillAlpha="0.3" />
+</vector> 

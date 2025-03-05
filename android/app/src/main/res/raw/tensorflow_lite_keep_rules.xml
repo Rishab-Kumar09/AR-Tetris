@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools"
+    tools:keep="@string/tensorflow_lite,
+               @string/tensorflow_lite_gpu,
+               org.tensorflow.lite.gpu.GpuDelegateFactory$Options,
+               org.tensorflow.lite.gpu.GpuDelegateFactory$Options$GpuBackend" /> 
