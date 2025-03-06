@@ -1,5 +1,5 @@
 name: ar_tetris
-description: AR Tetris game using hand tracking
+description: AR Tetris - A gesture-controlled augmented reality Tetris game
 version: 1.0.0+1
 
 environment:

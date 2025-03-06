@@ -1,0 +1,2 @@
+C:/Users/Rishi/Downloads/AR-Tetris/AR-Tetris2/android/app/.cxx/Debug/3h6yc3e4/x86_64/CMakeFiles/edit_cache.dir
+C:/Users/Rishi/Downloads/AR-Tetris/AR-Tetris2/android/app/.cxx/Debug/3h6yc3e4/x86_64/CMakeFiles/rebuild_cache.dir

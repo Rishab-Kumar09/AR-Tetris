@@ -5,7 +5,7 @@
     <uses-feature android:name="android.hardware.camera.autofocus" />
     
     <application
-        android:label="AR Bubble Pop"
+        android:label="AR Tetris"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher"
         tools:replace="android:label" android:debuggable="false">
