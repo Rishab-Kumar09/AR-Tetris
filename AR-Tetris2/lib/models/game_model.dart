@@ -446,33 +446,18 @@ class GameModel extends ChangeNotifier {
     if (now.difference(_lastMoveTime).inMilliseconds > _moveDelayMs) {
       if (x < _leftThreshold) {
         // Move left when hand is on the left side
-        if (_canMovePiece(_currentPiece!, -1, 0)) {
-          _currentPiece!.x--;
-          _lastMoveTime = now;
-          notifyListeners();
-        }
-      } else if (x > _rightThreshold) {
-        // Move right when hand is on the right side
         if (_canMovePiece(_currentPiece!, 1, 0)) {
           _currentPiece!.x++;
           _lastMoveTime = now;
           notifyListeners();
         }
-      }
-    }
-
-    // Handle rotation when hand is in the top area
-    if (y < _rotateThreshold &&
-        now.difference(_lastDropTime).inMilliseconds > _rotateDelayMs) {
-      final newRotation = (_currentPiece!.rotation + 1) % 4;
-      final originalRotation = _currentPiece!.rotation;
-      _currentPiece!.rotation = newRotation;
-
-      if (!_canMovePiece(_currentPiece!, 0, 0)) {
-        _currentPiece!.rotation = originalRotation;
-      } else {
-        _lastDropTime = now;
-        notifyListeners();
+      } else if (x > _rightThreshold) {
+        // Move right when hand is on the right side
+        if (_canMovePiece(_currentPiece!, -1, 0)) {
+          _currentPiece!.x--;
+          _lastMoveTime = now;
+          notifyListeners();
+        }
       }
     }
 
@@ -487,8 +472,22 @@ class GameModel extends ChangeNotifier {
     _lastHandY = y;
   }
 
-  // Remove the punch gesture handler as we're not using it anymore
+  // Handle punch/fist gesture for rotation
   void handlePunchGesture() {
-    // No longer used
+    if (!_isPlaying || _currentPiece == null) return;
+
+    final now = DateTime.now();
+    if (now.difference(_lastDropTime).inMilliseconds > _rotateDelayMs) {
+      final newRotation = (_currentPiece!.rotation + 1) % 4;
+      final originalRotation = _currentPiece!.rotation;
+      _currentPiece!.rotation = newRotation;
+
+      if (!_canMovePiece(_currentPiece!, 0, 0)) {
+        _currentPiece!.rotation = originalRotation;
+      } else {
+        _lastDropTime = now;
+        notifyListeners();
+      }
+    }
   }
 }

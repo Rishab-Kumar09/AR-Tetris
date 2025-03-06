@@ -9,6 +9,7 @@ import 'package:image/image.dart' as img_lib;
 class TFLiteHandTrackingService {
   // Value notifiers for hand position and debug info
   final ValueNotifier<Offset> handPosition = ValueNotifier<Offset>(Offset.zero);
+  final ValueNotifier<bool> isPunchGesture = ValueNotifier<bool>(false);
   final ValueNotifier<String> debugInfo =
       ValueNotifier<String>('Initializing TFLite hand tracking...');
 
@@ -129,9 +130,32 @@ class TFLiteHandTrackingService {
         // Use index finger tip (landmark 8) for tracking
         final indexTip = landmarks[8];
 
+        // Check for fist gesture by measuring distance between finger tips and palm
+        bool isFist = true;
+        final palmBase = landmarks[0]; // Wrist landmark
+        final fingerTips = [
+          landmarks[4],
+          landmarks[8],
+          landmarks[12],
+          landmarks[16],
+          landmarks[20]
+        ]; // Thumb and finger tips
+
+        for (var tip in fingerTips) {
+          double distance =
+              sqrt(pow(tip[0] - palmBase[0], 2) + pow(tip[1] - palmBase[1], 2));
+          if (distance > 0.2) {
+            // If any finger is extended
+            isFist = false;
+            break;
+          }
+        }
+
+        isPunchGesture.value = isFist;
+
         // Normalize coordinates to 0-1 range
         // Flip x-coordinate since camera is mirrored
-        double normalizedX = 1.0 - indexTip[0];
+        double normalizedX = indexTip[0]; // Remove the 1.0 - to fix inversion
         double normalizedY = indexTip[1];
 
         // Update hand position immediately without smoothing
@@ -141,6 +165,7 @@ class TFLiteHandTrackingService {
             'Hand detected: ${normalizedX.toStringAsFixed(2)}, ${normalizedY.toStringAsFixed(2)}';
       } else {
         debugInfo.value = 'No hand detected';
+        isPunchGesture.value = false;
       }
 
       _isProcessing = false;
