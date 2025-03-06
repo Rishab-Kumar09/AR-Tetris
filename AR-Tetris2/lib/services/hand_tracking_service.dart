@@ -13,13 +13,12 @@ class HandTrackingService {
   // Processing state
   bool _isInitialized = false;
   bool _isProcessing = false;
-  bool _lastPunchState = false;
-  DateTime _lastPunchTime = DateTime.now();
-  static const int _punchCooldownMs = 300;
+  DateTime _lastGestureTime = DateTime.now();
+  static const int _gestureCooldownMs = 400;
 
   // Smoothing variables
   final List<Offset> _positionHistory = [];
-  final int _historySize = 3;
+  final int _historySize = 3; // Reduced for faster response
   Offset? _lastValidPosition;
   int _invalidPositionCount = 0;
   final int _maxInvalidPositions = 3;
@@ -27,8 +26,9 @@ class HandTrackingService {
   // Hand detection parameters
   static const double _brightnessFactor = 0.65;
   static const double _faceRegionThreshold = 0.35;
-  static const double _minMovement = 0.01;
-  static const double _maxMovement = 0.2;
+  static const double _minMovement = 0.005; // Reduced for more sensitivity
+  static const double _maxMovement = 0.3; // Increased for faster movements
+  static const double _gestureThreshold = 0.15; // For vertical gestures only
 
   // Initialize hand tracking
   Future<void> initialize() async {
@@ -122,6 +122,28 @@ class HandTrackingService {
         handPosition.value = smoothedPosition;
         _lastValidPosition = smoothedPosition;
         _invalidPositionCount = 0;
+
+        // Check for vertical gestures only
+        if (_positionHistory.length >= 3) {
+          final now = DateTime.now();
+          if (now.difference(_lastGestureTime).inMilliseconds >
+              _gestureCooldownMs) {
+            final oldest = _positionHistory.first;
+            final newest = _positionHistory.last;
+            final verticalMovement = newest.dy - oldest.dy;
+
+            // Detect quick vertical movements
+            if (verticalMovement.abs() > _gestureThreshold) {
+              isPunchGesture.value = true;
+              _lastGestureTime = now;
+              debugInfo.value = verticalMovement < 0
+                  ? 'Rotation gesture'
+                  : 'Fast drop gesture';
+            } else {
+              isPunchGesture.value = false;
+            }
+          }
+        }
       } else {
         _handleInvalidPosition('Invalid movement detected');
       }
@@ -164,7 +186,7 @@ class HandTrackingService {
       return newPosition;
     }
 
-    final weight = 0.8;
+    final weight = 0.9; // Increased weight for newest position
     final oldWeight = 1.0 - weight;
 
     final latest = _positionHistory.last;

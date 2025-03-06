@@ -230,14 +230,9 @@ class GameModel extends ChangeNotifier {
   double _lastHandX = 0.5;
   double _lastHandY = 0.5;
   bool _isRotating = false;
-  DateTime _lastMoveTime = DateTime.now();
   DateTime _lastDropTime = DateTime.now();
-  static const double _leftThreshold = 0.35; // Left side of screen
-  static const double _rightThreshold = 0.65; // Right side of screen
-  static const double _dropThreshold = 0.7; // Bottom area for dropping
-  static const double _rotateThreshold = 0.3; // Top area for rotation
-  static const int _moveDelayMs = 150;
-  static const int _dropDelayMs = 250;
+  static const double _centerThreshold =
+      0.5; // Simple left/right split at center
   static const int _rotateDelayMs = 300;
 
   // Getters
@@ -440,34 +435,22 @@ class GameModel extends ChangeNotifier {
   void updateHandPosition(double x, double y) {
     if (!_isPlaying || _currentPiece == null) return;
 
-    final now = DateTime.now();
-
-    // Handle movement based on hand position
-    if (now.difference(_lastMoveTime).inMilliseconds > _moveDelayMs) {
-      if (x < _leftThreshold) {
-        // Move left when hand is on the left side
-        if (_canMovePiece(_currentPiece!, 1, 0)) {
-          _currentPiece!.x++;
-          _lastMoveTime = now;
-          notifyListeners();
-        }
-      } else if (x > _rightThreshold) {
-        // Move right when hand is on the right side
-        if (_canMovePiece(_currentPiece!, -1, 0)) {
-          _currentPiece!.x--;
-          _lastMoveTime = now;
-          notifyListeners();
-        }
+    // Instant left/right movement based on hand position
+    if (x < _centerThreshold) {
+      // Move left when hand is on the left half
+      if (_canMovePiece(_currentPiece!, 1, 0)) {
+        _currentPiece!.x++;
+        notifyListeners();
+      }
+    } else {
+      // Move right when hand is on the right half
+      if (_canMovePiece(_currentPiece!, -1, 0)) {
+        _currentPiece!.x--;
+        notifyListeners();
       }
     }
 
-    // Handle dropping when hand is in the bottom area
-    if (y > _dropThreshold &&
-        now.difference(_lastDropTime).inMilliseconds > _dropDelayMs) {
-      _dropPiece();
-      _lastDropTime = now;
-    }
-
+    // Handle vertical gestures (rotation and fast drop) through punch gesture handler
     _lastHandX = x;
     _lastHandY = y;
   }

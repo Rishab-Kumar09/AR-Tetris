@@ -9,7 +9,7 @@ class CameraService {
       ValueNotifier<CameraImage?>(null);
   bool _isProcessing = false;
   int _frameSkipCount = 0;
-  static const int _frameSkipTarget = 1; // Process every other frame
+  static const int _frameSkipTarget = 0; // Process every frame
 
   // Initialize camera
   Future<void> initialize() async {
@@ -33,10 +33,10 @@ class CameraService {
 
       _controller = CameraController(
         frontCamera,
-        ResolutionPreset.low,
+        ResolutionPreset.medium,
         enableAudio: false,
         imageFormatGroup: Platform.isAndroid
-            ? ImageFormatGroup.yuv420
+            ? ImageFormatGroup.nv21
             : ImageFormatGroup.bgra8888,
       );
 
