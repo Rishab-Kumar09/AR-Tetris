@@ -33,7 +33,6 @@ The game uses intuitive hand gestures for control:
 
 ## Technical Details
 
-- Built with Flutter
 - Uses device camera for hand tracking
 - Implements brightness-based hand detection
 - Optimized for performance with frame skipping
