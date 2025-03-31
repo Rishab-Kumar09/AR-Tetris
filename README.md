@@ -1,6 +1,6 @@
 # AR Tetris
 
-A gesture-controlled augmented reality Tetris game built with Flutter. Play Tetris using hand movements captured through your device's camera!
+A gesture-controlled augmented reality Tetris game. Play Tetris using hand movements captured through your device's camera!
 
 ## Features
 
