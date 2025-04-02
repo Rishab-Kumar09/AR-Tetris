@@ -1,50 +1,50 @@
 # AR Tetris
 
-A gesture-controlled augmented reality Tetris game. Play Tetris using hand movements captured through your device's camera!
+A gesture-controlled augmented reality Tetris game built with native Android/Kotlin. Play Tetris using hand movements captured through your device's camera!
 
 ## Features
 
-- Real-time hand tracking using camera input
+- Real-time hand tracking using MediaPipe
 - Gesture-based controls:
-  - Move your hand left/right of screen center to move pieces
-  - Quick upward hand movement to rotate pieces
-  - Quick downward hand movement for fast drop
-- Beautiful UI with camera preview and hand position visualization
+  - Move pieces left/right by positioning your index finger in different screen zones
+  - Make a fist to instantly drop the current piece
+  - Show two fingers (index and middle) to rotate pieces
+- Beautiful native UI with camera preview and hand position visualization
 - Score tracking and levels
 - Increasing difficulty as you progress
-- Works on Android devices
+- Optimized performance using native Android APIs
+
+## Technical Stack
+
+- Native Android development with Kotlin
+- MediaPipe for hand tracking and gesture recognition
+- CameraX API for efficient camera handling
+- Android SurfaceView for optimized rendering
+- ViewBinding for UI components
 
 ## Controls
 
 The game uses intuitive hand gestures for control:
 
 1. **Left/Right Movement**:
-   - Move your hand to the left half of the screen to move piece left
-   - Move your hand to the right half of the screen to move piece right
-   - Movement is instant and responsive
+   - Position your index finger in the left zone to move piece left
+   - Position your index finger in the right zone to move piece right
+   - Center zone keeps the piece in place
 
 2. **Rotation**:
-   - Quick upward hand movement rotates the piece clockwise
-   - Has a small cooldown to prevent accidental rotations
+   - Show two fingers (index and middle) to rotate the piece
+   - Responsive and accurate gesture detection
 
 3. **Fast Drop**:
-   - Quick downward hand movement triggers fast drop
-   - Use this to quickly place pieces at the bottom
-
-## Technical Details
-
-- Uses device camera for hand tracking
-- Implements brightness-based hand detection
-- Optimized for performance with frame skipping
-- Face detection avoidance using threshold zones
-- Smooth hand tracking with position history
+   - Make a fist (close all fingers) to instantly drop the piece
+   - Quick and precise response
 
 ## Requirements
 
 - Android device with camera
-- Android SDK version 21 or higher
-- Flutter 2.19.0 or higher
+- Android SDK version 30 or higher
 - Camera permissions enabled
+- Sufficient lighting for hand detection
 
 ## Installation
 
@@ -53,20 +53,9 @@ The game uses intuitive hand gestures for control:
 git clone https://github.com/yourusername/AR-Tetris.git
 ```
 
-2. Navigate to the project directory:
-```bash
-cd AR-Tetris/AR-Tetris2
-```
+2. Open in Android Studio
 
-3. Get dependencies:
-```bash
-flutter pub get
-```
-
-4. Run the app:
-```bash
-flutter run
-```
+3. Build and run on your device
 
 ## Game Rules
 
@@ -81,13 +70,19 @@ flutter run
 - Game speed increases with each level
 - Game ends if pieces stack to the top
 
-## Performance Tips
+## Performance Features
 
-1. Play in a well-lit environment
-2. Keep your hand below face level
-3. Make clear, deliberate movements
-4. Maintain some distance from the camera
-5. Avoid rapid, erratic movements
+1. Native Implementation Benefits:
+   - Direct access to Android APIs
+   - Optimized camera processing with CameraX
+   - Efficient hand tracking using MediaPipe
+   - Low-latency gesture recognition
+
+2. Best Practices:
+   - Hardware-accelerated rendering
+   - Efficient memory management
+   - Background thread processing
+   - Frame rate optimization
 
 ## Contributing
 
@@ -99,10 +94,6 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 
 ## Acknowledgments
 
-- Flutter team for the amazing framework
-- Camera plugin contributors
+- MediaPipe team for the hand tracking SDK
+- CameraX team for the camera API
 - The Tetris Company for the original game concept
-
-## Contact
-
-For any queries or suggestions, please open an issue in the GitHub repository.
